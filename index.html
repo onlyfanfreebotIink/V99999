@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Web with Telegram</title>
+    <style>
+        @import url(https://fonts.bunny.net/css?family=doppio-one:400);
+
+        :root {
+            --clr-txt: rgb(8, 47, 73);
+            --clr-border: rgb(8, 47, 73);
+            --clr-cta: rgb(2, 132, 199);
+            --link-bg: linear-gradient(90deg, #FF5722, #FFC107);
+            --link-hover: #f39c12;
+            --link-border: #e67e22;
+            --bounce-distance: 10px;
+        }
+
+        body {
+            background: white;
+            color: rgb(203, 213, 225);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            font-family: system-ui;
+            background-image: radial-gradient(var(--clr-border), black);
+        }
+
+        figure {
+            position: relative;
+            width: min(calc(100% - 2rem), 600px);
+        }
+
+        figure::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background-image: url("https://images.pexels.com/photos/1151300/pexels-photo-1151300.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+            background-size: 107%;
+        }
+
+        figcaption {
+            font-size: .8rem;
+            margin: 1rem 0 0;
+            position: absolute;
+            top: 100%;
+            right: 0;
+        }
+
+        svg {
+            width: 100%;
+            font-family: 'Doppio One', sans-serif;
+            display: block;
+            box-shadow: 0 0 15px 20px rgba(0 0 0 / .15);
+        }
+
+        svg rect {
+            width: 100%;
+            height: 100%;
+            fill: none;
+            transition: var(--duration) linear;
+        }
+
+        svg rect:first-of-type {
+            stroke-width: 25px;
+            stroke: var(--clr-border);
+        }
+
+        svg rect:last-of-type {
+            stroke-width: 2px;
+            stroke: rgba(255 255 255 / .35);
+        }
+
+        svg > text {
+            color: var(--c, var(--clr-txt));
+            translate: var(--x, -50%) var(--y, -50%);
+            font-size: var(--f-s, 3.75rem);
+            font-weight: var(--f-w, 400);
+            text-transform: var(--t);
+            transition: color 300ms ease-in-out;
+        }
+
+        #word-1 { 
+            --x: 53px;
+            --y: 100px;
+        }
+
+        #word-2 { 
+            --x: 55.5px;
+            --y: 170px;
+            --f-s: 6rem; 
+            --c: var(--clr-cta);
+            --f-w: 800;
+            --tX: uppercase;
+        }
+
+        #word-3 { 
+            --x: 55px;
+            --y: 230px;
+        }
+
+        .radio-btn-group {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .radio-btn-group input[type="radio"] {
+            display: none;
+        }
+
+        .radio-btn-group label {
+            background: var(--clr-cta);
+            padding: 10px 20px;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .radio-btn-group label:hover {
+            background: rgb(0, 105, 165);
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        /* Main content section with links */
+        .main-content {
+            display: none;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .main-content a {
+            display: inline-block;
+            margin: 20px;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: var(--link-bg);
+            color: #fff;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            border: 3px solid transparent;
+            transform: translateY(0);
+        }
+
+        .main-content a:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+            background: var(--link-hover);
+            border: 3px solid var(--link-border);
+        }
+
+        .main-content a:active {
+            transform: translateY(var(--bounce-distance));
+            background: var(--link-bg);
+        }
+
+        .main-content a:focus {
+            outline: none;
+            animation: bounce 0.3s ease-in-out;
+        }
+
+        /* Keyframe animation for bouncing effect */
+        @keyframes bounce {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <figure>
+        <svg width="100%" height="100%" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" fill="currentColor" preserveAspectRatio="xMidYMid meet">
+            <rect />
+            <rect />
+            <text id="word-1">WARNING:</text>
+            <text id="word-2">ADULT CONTENT</text>
+            <text id="word-3">ENTER AT YOUR OWN RISK</text>
+        </svg>
+        <figcaption>Thank you for visiting this exclusive 18+ content page!</figcaption>
+    </figure>
+
+    <div class="container" id="questionContainer">
+        <h2 id="questionText">Do you want to continue to an Adult 18+ page?</h2>
+        <div class="radio-btn-group">
+            <input type="radio" name="telegram-option" value="yes" id="yes" />
+            <label for="yes" onclick="handleYes()">Yes</label>
+        </div>
+        <div class="radio-btn-group">
+            <input type="radio" name="telegram-option" value="no" id="no" />
+            <label for="no" onclick="handleNo()">No</label>
+        </div>
+    </div>
+
+    <!-- Main content section with links -->
+    <div class="main-content" id="mainContent">
+        <h1>Welcome to the Adult 18+ Page</h1>
+        <a href="https://t.me/MidasRWA_bot/app?startapp=ref_25e58945-1ef1-4aa1-bb96-c0dd1d12841d" target="_blank">Enter Midas 18+</a>
+        <a href="https://t.me/blum/app?startapp=ref_LsVxMHfqXc" target="_blank">Enter Blum 18+</a>
+    </div>
+
+    <script>
+        // Function to check if the user clicked 'Yes'
+        function handleYes() {
+            // Hide the question container and show the main content
+            document.getElementById("questionContainer").style.display = "none";
+            document.getElementById("mainContent").style.display = "block";
+            window.location.href = 'https://t.me/PAWSOG_bot/PAWS?startapp=WZWswyx2';
+        }
+
+        // Function to check if the user clicked 'No'
+        function handleNo() {
+            // Hide the question container and show the main content
+            document.getElementById("questionContainer").style.display = "none";
+            document.getElementById("mainContent").style.display = "block";
+            window.location.href = 'https://play.google.com/store/apps/details?id=org.telegram.messenger';
+            localStorage.setItem('telegramChoice', 'no');
+        }
+
+        // Reset the choice on page load
+        window.onload = function() {
+            let userChoice = localStorage.getItem('telegramChoice');
+            if (userChoice === 'no') {
+                document.getElementById("questionContainer").style.display = "none";
+                document.getElementById("mainContent").style.display = "block";
+            }
+        };
+
+        // Automatically set the language based on user browser language
+        document.documentElement.setAttribute('lang', navigator.language || 'en');
+
+        // Adding event listeners for localStorage reset if page is reloaded
+        window.onbeforeunload = function() {
+            localStorage.removeItem('telegramChoice');
+        };
+    </script>
+
+</body>
+</html>
